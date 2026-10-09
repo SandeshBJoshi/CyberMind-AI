@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import hmac
+import ipaddress
 import threading
 import time
 from collections import defaultdict, deque
@@ -33,6 +34,26 @@ def verify_session_token(session_id: str, token: str | None) -> bool:
 # ---------------------------------------------------------------------------
 # Client IP
 # ---------------------------------------------------------------------------
+def _is_trusted_proxy(ip: str | None, trusted: set) -> bool:
+    """Exact match, or the address falls inside a trusted CIDR range such as 10.0.0.0/8 (hosts whose proxy IPs change)."""
+    if not ip or not trusted:
+        return False
+    if ip in trusted:
+        return True
+    try:
+        addr = ipaddress.ip_address(ip)
+    except ValueError:
+        return False
+    for entry in trusted:
+        if "/" in entry:
+            try:
+                if addr in ipaddress.ip_network(entry, strict=False):
+                    return True
+            except ValueError:
+                continue
+    return False
+
+
 def resolve_client_ip(request, fallback: str | None = None) -> str | None:
     """Return the client IP we are willing to believe.
 
@@ -46,12 +67,12 @@ def resolve_client_ip(request, fallback: str | None = None) -> str | None:
     headers = request.headers
     trusted = settings.trusted_proxy_set
 
-    if peer and peer in trusted:
+    if peer and _is_trusted_proxy(peer, trusted):
         fwd = headers.get("x-forwarded-for")
         if fwd:
             parts = [p.strip() for p in fwd.split(",") if p.strip()]
             for p in reversed(parts):
-                if p not in trusted:
+                if not _is_trusted_proxy(p, trusted):
                     return p
             if parts:
                 return parts[0]
