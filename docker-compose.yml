@@ -1,0 +1,19 @@
+# Optional: run Postgres locally instead of the default SQLite file.
+# Start with: docker compose up -d
+# Then set DATABASE_URL in backend/.env to:
+#   postgresql://sentinel:sentinel@localhost:5432/threatdb
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinel
+      POSTGRES_DB: threatdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

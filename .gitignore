@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.db
+*.joblib
+.env
+node_modules/
+dist/
+backend/data/cybermind_chroma/
+.DS_Store
+
+# local data and generated files
+data/
+*.sqlite3
+.vite/
+*.log
+.venv/
+venv/
