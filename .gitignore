@@ -15,3 +15,5 @@ data/
 *.log
 .venv/
 venv/
+.vercel/
+.env.local
