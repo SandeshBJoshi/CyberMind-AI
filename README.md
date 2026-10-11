@@ -843,3 +843,30 @@ VaultApp (the demo bank, `#user-portal`) has real customer accounts: open an acc
 - Each sign-in starts a monitored session; the browser reports typing/mouse behaviour to CYBERMIND.
 - The bank enforces CYBERMIND's decision: frozen session = HTTP 423 (freeze screen), step-up = HTTP 428 (customer re-enters their password via `/bank/step-up/verify`).
 - A pending step-up is **sticky**: normal-looking traffic does not clear it, only verification does.
+
+### Email (phishing) analysis
+Console → **Email Analysis**. Upload an `.eml` or paste the full message source. 11 ready-made test emails (6 phishing, 5 legitimate) are in `backend/app/email_samples/`.
+- **What it checks:** sender authentication (SPF / DKIM / DMARC), Reply-To and display-name mismatches, look-alike and brand-imitating domains, links whose visible text differs from the real destination, IP / shortener / punycode links, forms posting to other domains, dangerous attachments (double extensions, executables, macros, HTML), and urgency, credential and payment wording.
+- **Verdict:** points add up to SAFE (under 3), SUSPICIOUS (3 to 6) or PHISHING (6 or more), with a plain-English reason and the exact evidence for every point. The verdict is rule-based; no AI model decides it.
+- **Safety:** the email is only parsed. Links are never opened, attachments are only named and hashed, and only the analysis (not the email) is stored.
+- **Reports:** download a PDF or Markdown report with the verdict, reasons, indicators to block, MITRE ATT&CK mapping and recommended actions.
+- **Live alert:** a suspicious or phishing result raises the red banner in the console and counts on the Overview.
+- **Known limits:** a well-written targeted email with clean headers and no links can look safe; the check for known-bad links needs an outside service and is not included.
+- Code: `backend/app/email_parser.py`, `phish_rules.py`, `phish_engine.py`, `phish_report.py`, `routers/email_routes.py`, samples in `backend/app/email_samples/`. Tests: `backend/tests/test_email.py`.
+
+#### AI analyst (optional second opinion)
+With `GROQ_API_KEY` set, Email Analysis can also ask a Groq-hosted model (`openai/gpt-oss-20b` faster, `openai/gpt-oss-120b` stronger) to read the email and write its own assessment, in about a second. It is shown next to the rule-based result with "agrees / partly agrees / disagrees", and it is included in the PDF and Markdown reports.
+- **The rules stay official.** Email text is untrusted (some phishing contains instructions aimed at AI models), so the model never sets the verdict. The email is passed as data inside tags with an instruction not to obey it, and the answer must be valid JSON that is checked and clamped.
+- **Privacy:** when switched on, the email text and the scanner's findings are sent to Groq. Attachments are never sent. Switch it off in the screen and nothing leaves the server.
+- No key, no network or a bad answer: the AI panel just says it is unavailable and the rest works.
+- Code: `backend/app/phish_ai.py`. Tests (offline, with a fake model): `AiAnalystTests` and `AiApiTests` in `backend/tests/test_email.py`.
+
+### Analyst Assistant report format
+Ask a question about an uploaded report and the assistant answers in five sections:
+1. **Summary of the report**, written from what your report says.
+2. **Attacks performed**: each attack with a short evidence quote and its MITRE ATT&CK, CWE and CAPEC tags. A tag is marked *model-suggested* (dashed) unless the id really appears in your report.
+3. **Suggested actions and techniques**: grouped as mitigation, detection, response and hardening, by priority. Each action says whether it is *from the report* or *best practice, not in the report*.
+4. **CVEs and what defines them**: CVE ids are taken only from your report text (never from the AI), then looked up in the NIST **NVD** for CVSS score, severity, description and the **CWE** that defines the weakness. A CVE the NVD does not know shows as unverified.
+5. **Agents involved**: planner, retriever, (web researcher), analyst, reference checker (NVD) and fact-checker, each with what it did and its time.
+
+A fact-check (groundedness 1 to 5) judges only the claims taken from the report (summary, attacks, report-sourced actions); the model's threat-level rating, NVD data and best-practice extras are outside that check. The Markdown export has the same five sections. Needs internet for the model and the NVD; if the NVD is unreachable the CVEs simply show as unverified. Code: `backend/app/cybermind/` (`workflow.py`, `report.py`, `nvd.py`), screen: `frontend/src/components/IntelReport.jsx`, tests: `backend/tests/test_assistant_report.py`.

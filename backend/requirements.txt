@@ -27,3 +27,4 @@ langchain-text-splitters
 chromadb
 pymupdf
 duckduckgo-search
+reportlab>=4.0

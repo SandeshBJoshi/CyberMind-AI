@@ -139,3 +139,17 @@ class BankTransaction(Base):
     amount_cents = Column(Integer, nullable=False)        # negative = money out
     memo = Column(String, nullable=True)
     created_at = Column(DateTime, default=now, index=True)
+
+
+# ---- Email (phishing) analysis: only the analysis is stored, never the raw message or attachments ----
+class EmailAnalysis(Base):
+    __tablename__ = "email_analyses"
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime, default=now, index=True)
+    source = Column(String, default="upload")          # upload | paste | sample
+    subject = Column(String, nullable=True)
+    sender = Column(String, nullable=True)
+    verdict = Column(String, index=True)               # SAFE | SUSPICIOUS | PHISHING
+    score = Column(Float, default=0.0)
+    raw_sha256 = Column(String, index=True)
+    result = Column(JSON, default=dict)                # the full analysis (reasons, evidence, indicators, ...)

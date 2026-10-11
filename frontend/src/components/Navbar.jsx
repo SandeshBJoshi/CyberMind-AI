@@ -4,6 +4,7 @@ const ICONS = {
   dashboard: <><rect x="3" y="3" width="7" height="9" rx="1.5" /><rect x="14" y="3" width="7" height="5" rx="1.5" /><rect x="14" y="12" width="7" height="9" rx="1.5" /><rect x="3" y="16" width="7" height="5" rx="1.5" /></>,
   attacker: <><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" /></>,
   logs: <><path d="M5 4h14v16H5z" /><path d="M8 9h8M8 13h8M8 17h5" /></>,
+  email: <><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m3.5 7 8.5 6 8.5-6" /></>,
   sessions: <><circle cx="9" cy="8" r="3.2" /><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" /><circle cx="17" cy="9" r="2.4" /><path d="M16 14.2c2.9 0 5 2 5 4.8" /></>,
   integrate: <><path d="M9 7 4 12l5 5M15 7l5 5-5 5" /></>,
   portal: <><rect x="3" y="4" width="18" height="16" rx="2.5" /><path d="M3 9h18" /><circle cx="6.5" cy="6.5" r=".6" /></>,
@@ -14,10 +15,11 @@ const ICONS = {
 const TABS = [
   { id: 'dashboard', label: 'Overview', key: '1', group: 'MONITOR' },
   { id: 'logs', label: 'Detections', key: '2', group: 'MONITOR' },
-  { id: 'sessions', label: 'Active Sessions', key: '3', group: 'RESPOND' },
-  { id: 'attacker', label: 'Attack Simulator', key: '4', group: 'VALIDATE' },
-  { id: 'integrate', label: 'Integrations', key: '5', group: 'SETUP' },
-  { id: 'cybermind', label: 'Analyst Assistant', key: '6', group: 'ASSIST' },
+  { id: 'email', label: 'Email Analysis', key: '3', group: 'MONITOR' },
+  { id: 'sessions', label: 'Active Sessions', key: '4', group: 'RESPOND' },
+  { id: 'attacker', label: 'Attack Simulator', key: '5', group: 'VALIDATE' },
+  { id: 'integrate', label: 'Integrations', key: '6', group: 'SETUP' },
+  { id: 'cybermind', label: 'Analyst Assistant', key: '7', group: 'ASSIST' },
 ]
 export const openVaultApp = () => window.open(`${window.location.pathname}#user-portal`, '_blank', 'noopener')
 export { TABS }

@@ -1,0 +1,28 @@
+From: "The Data Weekly" <news@datawkly.com>
+To: priya@company.example
+Subject: Issue 42: how teams monitor model drift
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <legit_newsletter@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass smtp.mailfrom=datawkly.com;
+ dkim=pass header.d=datawkly.com; dmarc=pass header.from=datawkly.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============2975141455037547942=="
+
+--===============2975141455037547942==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+This week: three articles on monitoring machine learning models. Read online:=
+ https://datawkly.com/issue-42 . Unsubscribe: https://datawkly.com/unsub
+
+--===============2975141455037547942==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<p>This week: three articles on monitoring machine learning models.</p><p><a =
+href=3D"https://datawkly.com/issue-42">Read the issue</a> | <a href=3D"https:=
+//datawkly.com/unsub">Unsubscribe</a></p>
+
+--===============2975141455037547942==--

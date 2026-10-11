@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { marked } from 'marked'
+import IntelReport from './IntelReport'
 import { clearCybermindStore, getCybermindStatus, ingestCybermindReport, queryCybermind } from '../api'
 
 // Configure marked options
@@ -184,6 +185,7 @@ export default function CybermindAI() {
           EXECUTION PIPELINE // {result.steps?.join('  →  ') || 'complete'}
         </div>
 
+        {result.report ? <IntelReport result={result} /> : (<>
         {hud && (
           <div className="soc-threat-hud">
             {hud.level && (
@@ -226,6 +228,7 @@ export default function CybermindAI() {
           className="cybermind-report-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
+        </>)}
 
         <div className="soc-audit-card">
           <div className="soc-audit-top">

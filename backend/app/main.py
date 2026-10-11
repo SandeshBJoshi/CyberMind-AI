@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings, SECURITY_WARNINGS
 from .database import Base, engine, SessionLocal
 from .routers import (auth_routes, events_routes, logs_routes, lockdown_routes, ws_routes, simulate_routes,
-                      user_routes, cybermind_routes, campaign_routes, lab_routes, bank_routes)
+                      user_routes, cybermind_routes, campaign_routes, lab_routes, bank_routes, email_routes)
 from . import ml_engine, models
 from .seed_admin import main as seed_admin_main
 
@@ -52,7 +52,7 @@ async def security_headers(request: Request, call_next):
 
 
 for r in (auth_routes, events_routes, logs_routes, lockdown_routes, ws_routes, simulate_routes, user_routes,
-          cybermind_routes, campaign_routes, lab_routes, bank_routes):
+          cybermind_routes, campaign_routes, lab_routes, bank_routes, email_routes):
     app.include_router(r.router)
 
 

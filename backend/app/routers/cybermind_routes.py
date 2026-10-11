@@ -79,6 +79,7 @@ async def query(request: QueryRequest, _: object = Depends(get_current_admin)):
             "plan": result.get("plan", ""), "response": result.get("response", ""),
             "sources": result.get("sources", []), "steps": result.get("steps", []),
             "web_results": result.get("web_results", []), "validation_result": result.get("validation_result", {}),
+            "report": result.get("report"), "cves": result.get("cves", []), "trace": result.get("trace", []), "model": result.get("model", ""),
         }
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc

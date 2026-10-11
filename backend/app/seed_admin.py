@@ -3,7 +3,7 @@
 """
 from .database import SessionLocal, engine, Base
 from . import models
-from .auth import hash_password
+from .auth import hash_password, verify_password
 from .config import settings
 
 def main():
@@ -11,7 +11,13 @@ def main():
     db = SessionLocal()
     existing = db.query(models.AdminUser).filter(models.AdminUser.username == settings.admin_username).first()
     if existing:
-        print(f"Admin '{settings.admin_username}' already exists.")
+        # .env is the source of truth: if ADMIN_PASSWORD was changed there, update the stored hash to match
+        if not verify_password(settings.admin_password, existing.hashed_password):
+            existing.hashed_password = hash_password(settings.admin_password)
+            db.commit()
+            print(f"Admin '{settings.admin_username}' password updated from ADMIN_PASSWORD.")
+        else:
+            print(f"Admin '{settings.admin_username}' already exists.")
     else:
         admin = models.AdminUser(
             username=settings.admin_username,

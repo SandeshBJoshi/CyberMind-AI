@@ -1,0 +1,30 @@
+From: "Google" <no-reply@accounts.google.com>
+To: priya@company.example
+Subject: Security alert: new sign-in on Windows
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <legit_google_security_alert@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass
+ smtp.mailfrom=accounts.google.com; dkim=pass header.d=accounts.google.com;
+ dmarc=pass header.from=accounts.google.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4973845911236137144=="
+
+--===============4973845911236137144==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Your Google Account was just signed in to from a new Windows device. If this =
+was you, you don't need to do anything. If not, review your account activity:=
+ https://myaccount.google.com/notifications
+
+--===============4973845911236137144==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<p>Your Google Account was just signed in to from a new Windows device.</p><p=
+>If not, <a href=3D"https://myaccount.google.com/notifications">review your a=
+ccount activity</a>.</p>
+
+--===============4973845911236137144==--

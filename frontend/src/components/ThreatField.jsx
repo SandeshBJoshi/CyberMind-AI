@@ -27,10 +27,11 @@ const ACCENT2 = {
 const POSES = [
   { p: [0, 0, 19], l: [0, 0, 0] },          // 0 dashboard        OUTSIDE
   { p: [-10, 3.5, 12], l: [0, 0, 0] },      // 1 attacker         ORBIT
-  { p: [4, 1, 8.2], l: [0, 0, 0] },         // 2 logs             SHELL
-  { p: [0, 0, 5.6], l: [0, 0, -4] },        // 3 sessions         INSIDE
-  { p: [0, 0.2, 0.4], l: [0, 0, -5] },      // 4 cybermind        CORE
-  { p: [7, 2.5, -15], l: [0, 0, 0] },       // 5 portal           EXIT (looking back at the network)
+  { p: [4, 1, 8.2], l: [0, 0, 0] },         // 2 email analysis   SHELL
+  { p: [-5, 1.6, 7], l: [0, 0, -2] },       // 3 sessions         MEMBRANE
+  { p: [0, 0, 5.6], l: [0, 0, -4] },        // 4 attacker         INSIDE
+  { p: [0, 0.2, 0.4], l: [0, 0, -5] },      // 5 integrations     CORE
+  { p: [7, 2.5, -15], l: [0, 0, 0] },       // 6 assistant        EXIT (looking back at the network)
 ]
 
 const COMMON = /* glsl */`

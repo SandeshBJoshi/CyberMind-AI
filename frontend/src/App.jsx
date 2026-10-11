@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Login from './components/Login'
 import ProtectApp from './components/ProtectApp'
+import EmailAnalysis from './components/EmailAnalysis'
 import Landing from './components/Landing'
 import Navbar, { TABS, openVaultApp } from './components/Navbar'
 import Dashboard from './components/Dashboard'
@@ -26,7 +27,8 @@ import { connectLiveFeed } from './ws'
 const STATIONS = {
   dashboard: { id: 'dashboard', name: 'Overview', line: 'Your security posture, live.', depth: 'OUTSIDE' },
   logs: { id: 'logs', name: 'Detections', line: 'Every decision, with the reason.', depth: 'ORBIT' },
-  sessions: { id: 'sessions', name: 'Active Sessions', line: 'Contain. Release. Control.', depth: 'SHELL' },
+  email: { id: 'email', name: 'Email Analysis', line: 'Read what the eye cannot.', depth: 'SHELL' },
+  sessions: { id: 'sessions', name: 'Active Sessions', line: 'Contain. Release. Control.', depth: 'MEMBRANE' },
   attacker: { id: 'attacker', name: 'Attack Simulator', line: 'Test your defences safely.', depth: 'INSIDE' },
   integrate: { id: 'integrate', name: 'Integrations', line: 'Connect your app in minutes.', depth: 'CORE' },
   cybermind: { id: 'cybermind', name: 'Analyst Assistant', line: 'Ask the mind.', depth: 'EXIT' },
@@ -80,6 +82,10 @@ export default function App() {
         setLockedSessions(prev => ({ ...prev, [msg.session_id]: { session_id: msg.session_id, reason: msg.reason } }))
         setLogsRefreshKey(k => k + 1)
         showAlert(`Session ${String(msg.session_id).slice(0, 8)} frozen by automated lockdown`)
+      }
+      if (msg.type === 'email_phishing') {
+        setPulse(p => p + 1)
+        showAlert(`${msg.verdict === 'PHISHING' ? 'Phishing email detected' : 'Suspicious email'}: ${String(msg.subject || '').slice(0, 70)}`, 'EMAIL')
       }
       if (msg.type === 'campaign_blocked') {
         setPulse(p => p + 1)
@@ -275,6 +281,7 @@ export default function App() {
     dashboard: <Dashboard events={events} lockedSessionIds={lockedIds} setView={(id) => api.current.goTo(id, true)} pulse={pulse} />,
     attacker: <AttackerConsole />,
     logs: <LogsViewer refreshKey={logsRefreshKey} />,
+    email: <EmailAnalysis onAnalyzed={() => setPulse(p => p + 1)} />,
     sessions: (
       <SessionsPanel
         refreshKey={logsRefreshKey}

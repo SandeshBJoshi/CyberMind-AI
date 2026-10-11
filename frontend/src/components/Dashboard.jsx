@@ -4,7 +4,7 @@ import ActivityFeed from './ActivityFeed'
 import ThreatGauge from './ThreatGauge'
 import SessionOrbit from './SessionOrbit'
 import PulseChart, { bucketize } from './PulseChart'
-import { startSession, startNormalTraffic, stopNormalTraffic, getSessions, getSecurityStatus, getMlStatus, retrainModel } from '../api'
+import { getEmailStats, startSession, startNormalTraffic, stopNormalTraffic, getSessions, getSecurityStatus, getMlStatus, retrainModel } from '../api'
 
 const COPY = {
   SAFE: { title: 'SYSTEM SECURE', desc: 'All monitored sessions within normal behavioral range.' },
@@ -37,6 +37,8 @@ export default function Dashboard({ events, lockedSessionIds, setView, pulse = 0
   const [ml, setMl] = useState(null)
   const [mlMsg, setMlMsg] = useState('')
   const alive = useRef(true)
+  const [emailStats, setEmailStats] = useState(null)
+  useEffect(() => { getEmailStats().then(setEmailStats).catch(() => {}) }, [pulse])
 
   useEffect(() => {
     alive.current = true
@@ -103,6 +105,7 @@ export default function Dashboard({ events, lockedSessionIds, setView, pulse = 0
         <MetricCard label="ACTIVE SESSIONS" value={sessionCount} accent="neon" hint="monitored now" spark={sessionHistory} />
         <MetricCard label="EVENTS / MIN" value={perMinute} accent="safe" hint="live telemetry" spark={sparkAll} />
         <MetricCard label="SUSPICIOUS EVENTS" value={suspiciousCount} accent="amber" hint="flagged by engine" spark={sparkSus} />
+        <MetricCard label="PHISHING EMAILS" value={emailStats ? emailStats.phishing : 0} accent="red" hint={emailStats ? `${emailStats.total} analysed` : 'email analysis'} />
         <MetricCard label="LOCKDOWNS TRIGGERED" value={lockdownCount} accent="red" hint="auto-triggered" spark={sparkLock} />
       </div>
 

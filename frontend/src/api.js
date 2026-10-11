@@ -308,3 +308,37 @@ export async function bankLogin(username, password, device_info) {
 export const bankAccount = (sessionId) => bankCall(`/account?session_id=${encodeURIComponent(sessionId)}`, { method: 'GET', sessionId })
 export const bankTransfer = (sessionId, recipient, amount, memo) => bankCall('/transfer', { body: { session_id: sessionId, recipient, amount, memo }, sessionId })
 export const bankStepUp = (sessionId, password) => bankCall('/step-up/verify', { body: { session_id: sessionId, password }, sessionId })
+
+// ---------------------------------------------------------------- Email (phishing) analysis
+export const getEmailSamples = () => getJson('/api/email/samples', 'Failed to load sample emails')
+export const getEmailHistory = () => getJson('/api/email/history?limit=40', 'Failed to load email history')
+export const getEmailStats = () => getJson('/api/email/stats', 'Failed to load email stats')
+export const getEmailAnalysis = (id) => getJson(`/api/email/${id}`, 'Failed to load the analysis')
+
+async function emailPost(path, options, fail) {
+  const res = await adminFetch(path, { method: 'POST', ...options })
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(typeof data.detail === 'string' ? data.detail : Array.isArray(data.detail) ? data.detail.map(d => d.msg).join(', ') : fail)
+  return data
+}
+export const getEmailAiStatus = () => getJson('/api/email/ai-status', 'Failed to load AI status')
+export const analyzeEmailFile = (file, o = {}) => { const f = new FormData(); f.append('file', file); f.append('ai', o.ai ? 'true' : 'false'); if (o.model) f.append('model', o.model); return emailPost('/api/email/analyze', { body: f }, 'Could not analyse that file') }
+export const analyzeEmailText = (text, o = {}) => emailPost('/api/email/analyze-text', json({ text, ai: !!o.ai, model: o.model || null }), 'Could not analyse that text')
+export const analyzeEmailSample = (name, o = {}) => emailPost('/api/email/analyze-sample', json({ name, ai: !!o.ai, model: o.model || null }), 'Could not analyse that sample')
+
+export async function deleteEmailAnalysis(id) {
+  const res = await adminFetch(`/api/email/${id}`, { method: 'DELETE' })
+  if (!res.ok) throw new Error('Could not delete the analysis')
+  return res.json()
+}
+
+export async function downloadEmailReport(id, format = 'pdf') {
+  const res = await adminFetch(`/api/email/${id}/report?format=${format}`)
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || 'Could not build the report')
+  const blob = await res.blob()
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `phishing-report-${id}.${format}`
+  a.click()
+  URL.revokeObjectURL(a.href)
+}

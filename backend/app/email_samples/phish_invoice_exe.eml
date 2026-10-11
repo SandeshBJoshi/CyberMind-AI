@@ -1,0 +1,26 @@
+From: "Accounts Department" <billing@invoices-portal.top>
+To: priya@company.example
+Subject: Overdue invoice 8841, pay immediately
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <phish_invoice_exe@sample.invalid>
+Authentication-Results: mx.example.net; spf=softfail
+ smtp.mailfrom=invoices-portal.top; dkim=none; dmarc=none
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8422250739002447160=="
+
+--===============8422250739002447160==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello, the attached invoice is overdue. Please pay immediately by wire transf=
+er to avoid legal action. Open the attachment for the bank details.
+
+--===============8422250739002447160==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="Invoice_8841.pdf.exe"
+MIME-Version: 1.0
+
+aGFybWxlc3MgZGVtbyB0ZXh0LCBub3QgYSBwcm9ncmFt
+
+--===============8422250739002447160==--
