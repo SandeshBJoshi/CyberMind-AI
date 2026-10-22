@@ -1,0 +1,314 @@
+/* ================================================================
+   SENTINEL AI  —  Glitch / Shock-wave Intro Animation CSS
+   All classes prefixed with  sg-  to avoid conflicts with app CSS
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ─── Root container ─────────────────────────────────────────── */
+.sg-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  user-select: none;
+  pointer-events: all;
+  background: transparent;
+  opacity: 1;
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sg-intro.sg-fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Canvas ─────────────────────────────────────────────────── */
+.sg-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* ─── CSS Scanlines overlay ──────────────────────────────────── */
+.sg-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 3px
+  );
+  pointer-events: none;
+  animation: sgScanScroll 8s linear infinite;
+}
+@keyframes sgScanScroll {
+  from { background-position-y: 0; }
+  to   { background-position-y: 100px; }
+}
+
+/* ─── Corner HUD brackets ────────────────────────────────────── */
+.sg-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sg-c {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+
+.sg-hud-on .sg-c {
+  width: 44px;
+  height: 44px;
+  border-color: rgba(0, 240, 255, 0.75);
+}
+
+.sg-tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+.sg-tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.sg-bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+.sg-br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+.sg-hud-on .sg-tl { box-shadow: -2px -2px 14px -2px rgba(0, 240, 255, 0.45); }
+.sg-hud-on .sg-tr { box-shadow:  2px -2px 14px -2px rgba(0, 240, 255, 0.45); }
+.sg-hud-on .sg-bl { box-shadow: -2px  2px 14px -2px rgba(0, 240, 255, 0.45); }
+.sg-hud-on .sg-br { box-shadow:  2px  2px 14px -2px rgba(0, 240, 255, 0.45); }
+
+/* ─── Top-left brand mark ────────────────────────────────────── */
+.sg-brand {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  color: rgba(57, 255, 148, 0.85);
+  text-shadow: 0 0 16px rgba(57, 255, 148, 0.5);
+  pointer-events: none;
+}
+.sg-brand-pip {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(57, 255, 148, 0.95);
+  box-shadow: 0 0 10px rgba(57, 255, 148, 0.7);
+  animation: sgPip 1.5s ease infinite;
+}
+@keyframes sgPip {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(1.4); }
+}
+
+/* ─── Top-right phase readout ────────────────────────────────── */
+.sg-phase-wrap {
+  position: absolute;
+  top: 24px;
+  right: 84px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0, 240, 255, 0.75);
+  pointer-events: none;
+}
+.sg-phase-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.9);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+  animation: sgPip 1.2s ease infinite;
+}
+.sg-phase-txt {
+  animation: sgPhaseIn 0.3s ease;
+}
+@keyframes sgPhaseIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── Tagline Phase 5: DETECT · ANALYZE · PROTECT ─────────────── */
+.sg-detect-tagline {
+  position: absolute;
+  bottom: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(0, 240, 255, 0.9);
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  animation: sgDetectIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sgDetectIn {
+  from { opacity: 0; letter-spacing: 0.7em; transform: translateX(-50%) scale(0.95); }
+  to   { opacity: 1; letter-spacing: 0.45em; transform: translateX(-50%) scale(1); }
+}
+
+/* ─── Tagline Phase 6: SECURING A SAFER TOMORROW ──────────────── */
+.sg-securing-panel {
+  position: absolute;
+  top: 48%;
+  left: 10%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  pointer-events: none;
+  animation: sgSecuringIn 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sgSecuringIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-30px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+    filter: blur(0);
+  }
+}
+.sg-securing-line1 {
+  font-size: clamp(24px, 4vw, 48px);
+  letter-spacing: 0.32em;
+  color: #e6ffff;
+  text-shadow: 0 0 25px rgba(0, 240, 255, 0.65);
+}
+.sg-securing-line2 {
+  font-size: clamp(20px, 3.4vw, 40px);
+  letter-spacing: 0.28em;
+  color: rgba(0, 240, 255, 0.9);
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+.sg-securing-line3 {
+  font-size: clamp(24px, 4vw, 48px);
+  letter-spacing: 0.35em;
+  color: rgba(57, 255, 148, 0.95);
+  text-shadow: 0 0 28px rgba(57, 255, 148, 0.6);
+}
+
+/* ─── SYSTEM ONLINE Badge Phase 7/8/9 ─────────────────────────── */
+.sg-online-badge {
+  position: absolute;
+  bottom: 145px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  background: rgba(2, 20, 15, 0.7);
+  border: 1px solid rgba(57, 255, 148, 0.35);
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(57, 255, 148, 0.95);
+  box-shadow: 0 0 24px rgba(57, 255, 148, 0.3), inset 0 0 12px rgba(57, 255, 148, 0.1);
+  pointer-events: none;
+  animation: sgOnlineBadgeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sgOnlineBadgeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(14px) scale(0.9); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+.sg-online-pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(57, 255, 148, 1);
+  box-shadow: 0 0 12px rgba(57, 255, 148, 0.9);
+  animation: sgOnlinePulse 1.2s ease infinite;
+}
+@keyframes sgOnlinePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.6); opacity: 0.5; }
+}
+
+/* ─── Progress bar ────────────────────────────────────────────── */
+.sg-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+.sg-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.6), rgba(57, 255, 148, 0.9));
+  box-shadow: 0 0 12px rgba(57, 255, 148, 0.6);
+  transition: width 0.2s linear;
+}
+
+/* ─── Skip button ────────────────────────────────────────────── */
+.sg-skip {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: rgba(0, 240, 255, 0.8);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+.sg-skip:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: rgba(0, 240, 255, 0.8);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.45);
+}
+.sg-skip:active {
+  transform: scale(0.96);
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sg-intro,
+  .sg-intro.sg-fading { transition: opacity 0.3s ease; }
+  .sg-scanlines { animation: none; }
+  .sg-brand-pip,
+  .sg-phase-dot,
+  .sg-online-pip { animation: none; }
+  .sg-detect-tagline,
+  .sg-securing-panel,
+  .sg-online-badge { animation: none; }
+  .sg-c { transition: none; }
+}

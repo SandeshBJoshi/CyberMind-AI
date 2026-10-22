@@ -1,0 +1,28 @@
+From: "Amazon.in" <auto-confirm@amazon.in>
+To: priya@company.example
+Subject: Your order #402-7781234 has shipped
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <legit_order_confirmation@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass smtp.mailfrom=amazon.in;
+ dkim=pass header.d=amazon.in; dmarc=pass header.from=amazon.in
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3929338026791220817=="
+
+--===============3929338026791220817==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Your order has shipped and will arrive on Monday. Track your package: https:/=
+/www.amazon.in/gp/your-account/order-details?orderID=3D402-7781234
+
+--===============3929338026791220817==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<p>Your order has shipped and will arrive on Monday.</p><p><a href=3D"https:/=
+/www.amazon.in/gp/your-account/order-details?orderID=3D402-7781234">Track you=
+r package</a></p>
+
+--===============3929338026791220817==--

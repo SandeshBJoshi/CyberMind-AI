@@ -1,0 +1,14 @@
+From: "Rahul Mehta (CEO)" <rahul.ceo.office@gmail.com>
+To: priya@company.example
+Subject: Quick favour
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <phish_ceo_giftcard@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass smtp.mailfrom=gmail.com;
+ dkim=pass header.d=gmail.com; dmarc=pass header.from=gmail.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+Are you available right now? I am in a meeting and cannot take calls. I need =
+you to buy 5 gift card codes for a client as soon as possible. Keep this conf=
+idential and send me the codes here.

@@ -1,0 +1,36 @@
+# Optional: run Postgres locally instead of the default SQLite file.
+# Start with: docker compose up -d
+# Then set DATABASE_URL in backend/.env to:
+#   postgresql://sentinel:sentinel@localhost:5432/threatdb
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinel
+      POSTGRES_DB: threatdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Feature 3 (optional): the CyberMind Network hub.   docker compose --profile network up
+  hub:
+    profiles: ["network"]
+    image: python:3.12-slim
+    working_dir: /hub
+    command: sh -c "pip install -q fastapi 'uvicorn[standard]' pydantic && uvicorn app:app --host 0.0.0.0 --port 8200"
+    environment:
+      HUB_ADMIN_KEY: ${HUB_ADMIN_KEY:?set HUB_ADMIN_KEY to a long secret}
+      HUB_MIN_MEMBERS: ${HUB_MIN_MEMBERS:-2}
+      HUB_DB: /data/hub.db
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./hub:/hub:ro
+      - hubdata:/data
+volumes:
+  pgdata:
+  hubdata:

@@ -1,0 +1,28 @@
+From: "Microsoft 365 Team" <no-reply@micros0ft-support.com>
+To: priya@company.example
+Subject: Security alert: confirm your identity
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <phish_microsoft_lookalike@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass
+ smtp.mailfrom=micros0ft-support.com; dkim=pass
+ header.d=micros0ft-support.com; dmarc=pass header.from=micros0ft-support.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============1731354301184564775=="
+
+--===============1731354301184564775==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+We detected a sign-in from an unknown device. Confirm your identity now: http=
+s://login.micros0ft-support.com/verify
+
+--===============1731354301184564775==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<p>We detected a <b>sign-in from an unknown device</b>.</p><p><a href=3D"http=
+s://login.micros0ft-support.com/verify">Confirm your identity</a></p>
+
+--===============1731354301184564775==--

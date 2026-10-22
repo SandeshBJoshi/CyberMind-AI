@@ -1,0 +1,14 @@
+From: "Ravi Kumar" <ravi@company.example>
+To: priya@company.example
+Subject: Standup moved to 10:30 tomorrow
+Date: Thu, 08 Oct 2026 09:14:02 +0530
+Message-ID: <legit_internal_meeting@sample.invalid>
+Authentication-Results: mx.example.net; spf=pass
+ smtp.mailfrom=company.example; dkim=pass header.d=company.example; dmarc=pass
+ header.from=company.example
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+Hi team, tomorrow's standup is moved to 10:30. Agenda: model results, demo pl=
+an, open bugs. See you there.

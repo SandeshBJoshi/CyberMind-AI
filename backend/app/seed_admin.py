@@ -1,0 +1,32 @@
+"""Run once to create the initial admin/owner account:
+    python -m app.seed_admin
+"""
+from .database import SessionLocal, engine, Base
+from . import models
+from .auth import hash_password, verify_password
+from .config import settings
+
+def main():
+    Base.metadata.create_all(bind=engine)
+    db = SessionLocal()
+    existing = db.query(models.AdminUser).filter(models.AdminUser.username == settings.admin_username).first()
+    if existing:
+        # .env is the source of truth: if ADMIN_PASSWORD was changed there, update the stored hash to match
+        if not verify_password(settings.admin_password, existing.hashed_password):
+            existing.hashed_password = hash_password(settings.admin_password)
+            db.commit()
+            print(f"Admin '{settings.admin_username}' password updated from ADMIN_PASSWORD.")
+        else:
+            print(f"Admin '{settings.admin_username}' already exists.")
+    else:
+        admin = models.AdminUser(
+            username=settings.admin_username,
+            hashed_password=hash_password(settings.admin_password),
+        )
+        db.add(admin)
+        db.commit()
+        print(f"Created admin user '{settings.admin_username}'.")
+    db.close()
+
+if __name__ == "__main__":
+    main()
