@@ -1,7 +1,7 @@
 # Render Blueprint: the CYBERMIND AI backend (FastAPI). The frontend lives on Vercel and calls this API.
 services:
   - type: web
-    name: antrikshai-api
+    name: cybermind-api
     runtime: python
     rootDir: backend
     plan: free
@@ -21,8 +21,8 @@ services:
         generateValue: true
       - key: APP_API_KEYS
         generateValue: true
-      - key: CORS_ORIGINS           # the Vercel URL of the frontend (change it if your Vercel URL differs)
-        value: https://antrikshai-six.vercel.app
+      - key: CORS_ORIGINS           # the Vercel URL of the frontend; Render asks for it when you create the service
+        sync: false
       - key: ALLOW_CLIENT_IP_HEADER
         value: "false"
       - key: TRUSTED_PROXIES        # Render's proxy addresses are private and not fixed, so trust the private ranges
