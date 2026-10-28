@@ -127,8 +127,9 @@ export default function UserPortal() {
       const n = Math.min(Math.max(e.clipboardData?.getData("text")?.length || 1, 1), 100)
       intervals.current = [...intervals.current.slice(-(100 - n)), ...Array(n).fill(1)]; setTick(x => x + 1)
     }
-    document.addEventListener("mousemove", mm); document.addEventListener("click", mc); document.addEventListener("paste", paste)
-    return () => { clearInterval(t); document.removeEventListener("mousemove", mm); document.removeEventListener("click", mc); document.removeEventListener("paste", paste) }
+    const tm = e => { const t0 = e.touches && e.touches[0]; if (t0) moves.current = [...moves.current.slice(-199), { x: t0.clientX, y: t0.clientY }] }   // phones: finger movement counts as pointer movement
+    document.addEventListener("mousemove", mm); document.addEventListener("touchmove", tm, { passive: true }); document.addEventListener("click", mc); document.addEventListener("paste", paste)
+    return () => { clearInterval(t); document.removeEventListener("mousemove", mm); document.removeEventListener("touchmove", tm); document.removeEventListener("click", mc); document.removeEventListener("paste", paste) }
   }, [])
 
   // restore a previous session if the server still knows it

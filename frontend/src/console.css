@@ -1093,3 +1093,36 @@ body.cm-open .cm-hud { opacity: 0; transition: opacity 0.3s; }
 .cine-skips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; } .cine-skip-always { opacity: 0.85; }
 
 .cm-body-label { display: none; position: fixed; z-index: 70; pointer-events: none; padding: 5px 10px; border-radius: 8px; background: rgba(8,10,26,0.92); border: 1px solid rgba(143,139,255,0.5); color: #e6e9ff; font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; }
+
+/* ---------- phones and small tablets ---------- */
+.cm-page { grid-template-columns: minmax(0, 1fr); }
+.cm-page > *, .cm-ws-body > * { min-width: 0; }
+.pro-panel, .cm-card { min-width: 0; max-width: 100%; }
+.pro-table-wrap { max-width: 100%; -webkit-overflow-scrolling: touch; }
+@media (max-width: 900px) {
+  .cm-rail { height: 56px; padding: 0 10px; gap: 8px; flex-wrap: nowrap; }
+  .cm-brand { padding: 0 2px; flex: 0 0 auto; }
+  .cm-brand-name { display: none; }
+  .cm-nav { flex: 0 1 auto; gap: 2px; }
+  .cm-rail-foot { display: flex; flex-direction: row; gap: 6px; margin: 0 0 0 auto; flex: 0 0 auto; }
+  .cm-scenic-btn { display: none; }
+  .cm-vault-btn { padding: 8px 10px; }
+  .cm-vault-btn span:first-child { display: none; }
+  .cm-logout { padding: 8px 10px; font-size: 12px; white-space: nowrap; }
+  .cm-ws { padding: 0 12px 80px; }
+  .cm-ws-bar { flex-wrap: wrap; row-gap: 8px; margin: 10px 0 16px; }
+  .cm-ws-title { order: 3; flex: 1 0 100%; }
+  .cm-ws-nav { margin-left: auto; }
+  .cm-ws-nav kbd, .cm-ws-title b { display: none; }
+  .cm-page-head h1 { font-size: 30px; }
+  .pro-toolbar { flex-wrap: wrap; gap: 8px; }
+  .pro-search { flex: 1 1 100%; }
+  .pro-drawer { width: 100%; max-width: 100%; }
+  .cm-seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .cm-seg button { flex: 0 0 auto; white-space: nowrap; }
+}
+@media (max-width: 560px) {
+  .pro-kpis { grid-template-columns: repeat(2, 1fr); }
+  .pro-table th, .pro-table td { padding: 8px 8px; }
+  .cm-page-head { gap: 12px; }
+}
